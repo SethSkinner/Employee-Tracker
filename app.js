@@ -33,8 +33,8 @@ function runSearch() {
                 'exit employee tracker'
             ]
         })
-        .then(function(answer){
-            switch(answer.action) {
+        .then(function(res){
+            switch(res.action) {
                 case 'view employee list':
                     viewEmployeeList();
                     break;
@@ -97,3 +97,44 @@ function viewEmployeeRole() {
                 runSearch();
     }
 )};
+
+function addNewEmployee() {
+    inquirer
+        .prompt([
+            {
+                name: 'f_name',
+                type: 'input',
+                message: 'Please enter the employees first name.',   
+            },
+            {
+                name: 'l_name',
+                type: 'input',
+                message: 'Please enter the employees last name.',
+            },
+            {
+                name: 'r_id',
+                type: 'input',
+                message: 'please enter the role id for employee',
+            },
+            {
+                name: 'm_id',
+                type: 'input',
+                message: 'please enter the manager id for employee',
+            }
+        ])
+        .then(function(res) {
+            connection.query('INSERT INTO employee SET ?',
+            {
+                f_name: res.f_name,
+                l_name: res.l_name,
+                r_id: res.r_id, 
+                m_id: res.m_id
+            },
+            function(err) {
+                if (err) throw err;
+                    console.log('added employee.');
+                    runSearch();
+            }
+            )
+        })
+    }; 
