@@ -75,7 +75,7 @@ function runSearch() {
 };
 
 function viewEmployeeList() {
-   connection.query('SELECT * FROM employee', function(err, res) {
+   connection.query('SELECT * FROM employees', function(err, res) {
         if (err) throw err;
             console.table(res);
                 runSearch();
@@ -123,7 +123,7 @@ function addNewEmployee() {
             }
         ])
         .then(function(res) {
-            connection.query('INSERT INTO employee SET ?',
+            connection.query('INSERT INTO employees SET ?',
             {
                 f_name: res.f_name,
                 l_name: res.l_name,
@@ -138,3 +138,23 @@ function addNewEmployee() {
             )
         })
     }; 
+
+function addNewDepartment() {
+    inquirer
+        .prompt({
+            name: 'd_name',
+            type: 'input',
+            message: 'Enter the name of the department you would like to add'
+        })
+        .then(function(res) {
+            connection.query("INSERT INTO departments SET ?"),
+               {
+                   name: res.d_name
+               }, 
+               function(err) {
+                   if (err) throw err;
+                   console.log('You have added the department.');
+                   runSearch();
+               }
+        })
+};
