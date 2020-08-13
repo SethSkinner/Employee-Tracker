@@ -147,14 +147,15 @@ function addNewDepartment() {
             message: 'Enter the name of the department you would like to add'
         })
         .then(function(res) {
-            connection.query("INSERT INTO departments SET ?"),
+            connection.query('INSERT INTO departments SET ?',
                {
-                   name: res.d_name
+                   d_name: res.d_name
                }, 
                function(err) {
                    if (err) throw err;
                    console.log('You have added the department.');
                    runSearch();
-               }
+                }
+            )
         })
-};
+    }; 
