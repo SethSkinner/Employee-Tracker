@@ -159,3 +159,84 @@ function addNewDepartment() {
             )
         })
     }; 
+
+function addNewEmployeeRole() {
+    inquirer   
+        .prompt([
+            {
+                name: 'title',
+                type: 'input',
+                message: 'Enter the title of the employees role.'
+            },
+            {
+                name: 'Salary',
+                type: 'input',
+                message: 'Enter the Salary of the role.'
+            },
+            {
+                name: 'd_id',
+                type: 'input',
+                message: 'please enter the id of the department.'
+            },
+        ]) 
+        .then(function(res){
+            connection.query('INSERT INTO role SET ?',
+                {
+                    title: res.title,
+                    Salary: res.Salary,
+                    d_id: res.department_id
+                },
+                function(err) {
+                    if (err) throw err;
+                   console.log('You have added the employee role.');
+                   runSearch();
+                }
+            )
+        });
+};
+
+function updateEmployeeRole() {
+    inquirer
+        .prompt([
+            {
+                name: 'id',
+                type: 'input',
+                message: 'Enter the id of the employee you would like to update the role of.'
+            },
+            {
+                name: 'r_id',
+                type: 'input',
+                message: 'enter the id of the employees new role.'
+            }
+        ])
+        .then(function(res) {
+            connection.query('UPDATE employees SET r_id = ' + res.r_id + ' WHERE id = ' + res.id,
+                function(err,) {
+                    if (err) throw err;
+                    console.log('you have updated employee with that id.');
+                    runSearch();
+        })
+    })
+};
+
+function removeCurrentEmployee() {
+    inquirer
+        .prompt({
+            name: 'id',
+            type: 'input',
+            message: 'Please enter id of employee you wish to delete.'
+        })
+        .then(function(res) {
+            connection.query('DELETE FROM employees WHERE id = ?', [res.id],
+                function(err) {
+                    if (err) throw err;
+                    console.log('you have deleted employee with that id.');
+                    runSearch();
+        })
+    })
+};
+
+function exitEmployeeTracker () {
+    console.log('you have closed the application!');
+    connection.end();
+};
