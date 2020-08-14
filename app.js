@@ -180,11 +180,11 @@ function addNewEmployeeRole() {
             },
         ]) 
         .then(function(res){
-            connection.query('INSERT INTO role SET ?',
+            connection.query('INSERT INTO roles SET ?',
                 {
                     title: res.title,
                     Salary: res.Salary,
-                    d_id: res.department_id
+                    d_id: res.d_id
                 },
                 function(err) {
                     if (err) throw err;
